@@ -2,38 +2,23 @@
   <div class="container">
     <section class="header">
       <h1 class="page-title">Mesajes privados - <small>Enviar mensaje</small></h1>
+      <br>
     </section>
 
     <section class="content">
       <div class="row">
-        <div class="col-md-2 col-sm-2 col-with-right-border">
-          <private-message-sidebar></private-message-sidebar>
-        </div>
-
         <div class="col-sm-8">
           <form v-on:submit.prevent="handleFormSubmit()">
             <div class="form-group">
-              <!-- <h1>{{pmStore.users}}</h1> -->
-              
-              <multiselect
-                v-model="userSelected"
-                :options="pmStore.users"
-                :searchable="true"
-                :close-on-select="true"
-                :show-labels="false"
-                track-by="id"
-                label="name">
+              <!-- <h3>{{pmStore.users}}</h3> -->
+              <multiselect v-model="userSelected" placeholder="Seleciona un usuario" :options="pmStore.users" :searchable="true" :close-on-select="true" :show-labels="true" track-by="sender_id" label="sender_id">
               </multiselect>
+
             </div>
 
             <div class="form-group">
               <label for="">Subject</label>
-              <input type="text" v-model="subject" class="form-control" placeholder="Enter subject">
-            </div>
-
-            <div class="form-group">
-              <label for="">Message</label>
-              <textarea name="message" v-model="message" class="form-control"></textarea>
+              <input type="text" v-model="subject" class="form-control" placeholder="Enter subject" required>
             </div>
 
             <button class="btn btn-primary">
@@ -53,14 +38,6 @@
     props: {
         user: {required: true}
     },
-    computed: {
-      ...mapState({
-        pmStore: state => state.PrivateMessageStore
-      })
-    },
-    created () {
-      this.$store.dispatch('getUserList')
-    },
     data () {
       return {
           userSelected: null,
@@ -68,16 +45,23 @@
           message: ''
       }
     },
+    computed: {
+      ...mapState({
+        pmStore: state => state.PrivateMessageStore
+      })
+    },
+    created () {
+      this.$store.dispatch('getUserList', this.user)
+    },
     methods: {
       handleFormSubmit () {
+        console.log(this.userSelected);
         let postData = {
-          'sender_id': this.user.id,
-          'receiver_id': this.userSelected.id,
-          'message': this.message,
+          'sender': this.user.email,
+          'receiver': this.userSelected.sender_id,
           'subject': this.subject
         }
-
-        this.$store.dispatch('sendPrivateMessage', postData)
+        this.$store.dispatch('sendSubject', postData)
           .then(response => {
             location.href = '/index';
           })
@@ -85,4 +69,5 @@
     }
   }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
 

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 	@section('content')
-		<privatemessageview :id="{{$id}}"></privatemessageview>
+		<privatemessageview :id="{{$id}}" :user="{{$user}}"></privatemessageview>
 	@endsection

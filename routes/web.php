@@ -32,15 +32,16 @@ Route::middleware(["auth"])->group( function(){
 	    return view('index', compact('user'));
 	});
 
-	Route::get('/enviados', function () {
-		$user = Auth::user();
-	    return view('chat/enviados', compact('user'));
-	});
+	// Route::get('/enviados', function () {
+	// 	$user = Auth::user();
+	//     return view('chat/enviados', compact('user'));
+	// });
 	Route::get('/enviar', function () {
 		$user = Auth::user();
 	    return view('chat/enviar', compact('user'));
 	});
 	Route::get('/detalles/{id}', function ($id) {
-	    return view('chat/detalles',compact('id'));
+		$user = Auth::user();
+	    return view('chat/detalles',compact('id','user'));
 	});
 });
