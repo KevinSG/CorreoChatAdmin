@@ -57,11 +57,11 @@ import {mapState} from 'vuex'
     },
     sockets: {
       message(data) {
-        //console.log(JSON.parse(data));
+        // console.log(JSON.parse(data));
         let message = JSON.parse(data);
         this.$store.dispatch('newSubjectNotification', message.message);
       }
-    }
+    },
   }
 </script>
 

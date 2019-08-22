@@ -13,10 +13,10 @@ import VueSocketIO from 'vue-socket.io'
 // import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 window.Vue = require('vue');
-// window.Vuetify = require('vuetify');
+window.Vuetify = require('vuetify');
 Vue.use(new VueSocketIO({
-    debug: true,
-    connection: 'localhost:8890',
+    debug: false,
+    connection: window.location.hostname + ':8890',
     vuex: {
         store,
         actionPrefix: 'SOCKET_',
